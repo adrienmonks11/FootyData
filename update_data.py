@@ -30,7 +30,7 @@ codes = ["PL", "BL1", "SA", "PD", "FL1"]
 def update_top_scorers(league):
     table_name = "top_scorers"
     data = top_scorers(league)
-    connection = mysql.connector.connect(**DB_LOCAL_CONFIG)
+    connection = mysql.connector.connect(**DB_CONFIG)
     cursor = connection.cursor()
     # Iterate through the data and insert into the database
     for player in data:
@@ -51,7 +51,7 @@ def update_top_scorers(league):
 def update_top_assists(league):
     table_name = "top_assists"
     data = top_assists(league)
-    connection = mysql.connector.connect(**DB_LOCAL_CONFIG)
+    connection = mysql.connector.connect(**DB_CONFIG)
     cursor = connection.cursor()
     # Iterate through the data and insert into the database
     for player in data:
@@ -72,7 +72,7 @@ def update_top_assists(league):
 def update_standings(league):
     table_name = "standings"
     data = get_standings(league)
-    connection = mysql.connector.connect(**DB_LOCAL_CONFIG)
+    connection = mysql.connector.connect(**DB_CONFIG)
     cursor = connection.cursor()
     # Iterate through the data and insert into the database
     for team in data:
@@ -92,7 +92,7 @@ def update_standings(league):
 def update_matches(league):
     table_name = "matches"
     data = get_matches(league)
-    connection = mysql.connector.connect(**DB_LOCAL_CONFIG)
+    connection = mysql.connector.connect(**DB_CONFIG)
     cursor = connection.cursor()
     # Iterate through the data and insert into the database
     for match in data:
@@ -112,7 +112,7 @@ def update_matches(league):
 def update_all_matches():
     table_name = "today_matches"
     data = get_all_matches()
-    connection = mysql.connector.connect(**DB_LOCAL_CONFIG)
+    connection = mysql.connector.connect(**DB_CONFIG)
     cursor = connection.cursor()
     # Iterate through the data and insert into the database
     for match in data:
@@ -130,7 +130,7 @@ def update_all_matches():
 
 # Deletes old data and calls the update functions to insert new
 def update_all():
-    connection = mysql.connector.connect(**DB_LOCAL_CONFIG)
+    connection = mysql.connector.connect(**DB_CONFIG)
     cursor = connection.cursor()
     # Delete existing data
     cursor.execute("DELETE FROM top_scorers")
