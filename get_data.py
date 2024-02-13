@@ -4,7 +4,7 @@ from db_config import DB_CONFIG, DB_LOCAL_CONFIG
 
 # Returns standings data for given league id
 def get_league_standings(league_id):
-    connection = mysql.connector.connect(**DB_LOCAL_CONFIG)
+    connection = mysql.connector.connect(**DB_CONFIG)
     cursor = connection.cursor(dictionary=True)
     query = f"SELECT * FROM standings WHERE league_id = {league_id} ORDER BY position ASC"
     cursor.execute(query)
@@ -17,7 +17,7 @@ def get_league_standings(league_id):
 
 # Returns matches data for given league id
 def get_league_matches(league_id):
-    connection = mysql.connector.connect(**DB_LOCAL_CONFIG)
+    connection = mysql.connector.connect(**DB_CONFIG)
     cursor = connection.cursor(dictionary=True)  # Fetch data as dictionaries
     query = f"SELECT * FROM matches WHERE league_id = {league_id}"
     cursor.execute(query)
@@ -29,7 +29,7 @@ def get_league_matches(league_id):
 
 # Returns today's matches data
 def get_today_matches():
-    connection = mysql.connector.connect(**DB_LOCAL_CONFIG)
+    connection = mysql.connector.connect(**DB_CONFIG)
     cursor = connection.cursor(dictionary=True)
     query = "SELECT * FROM today_matches"
     cursor.execute(query)
@@ -42,7 +42,7 @@ def get_today_matches():
 
 # Returns top scorers data for given league id
 def get_top_scorers(league_id):
-    connection = mysql.connector.connect(**DB_LOCAL_CONFIG)
+    connection = mysql.connector.connect(**DB_CONFIG)
     cursor = connection.cursor()
     if league_id == 'general':
         query = "SELECT * FROM top_scorers ORDER BY goals DESC LIMIT 20"
@@ -59,7 +59,7 @@ def get_top_scorers(league_id):
 
 # Returns top assists data for given league id
 def get_top_assists(league_id):
-    connection = mysql.connector.connect(**DB_LOCAL_CONFIG)
+    connection = mysql.connector.connect(**DB_CONFIG)
     cursor = connection.cursor()
     if league_id == 'general':
         query = f"SELECT * FROM top_assists ORDER BY assists DESC LIMIT 20"
@@ -76,7 +76,7 @@ def get_top_assists(league_id):
 
 # Returns top goal contributions data for given league id
 def get_top_goal_contributions(league_id):
-    connection = mysql.connector.connect(**DB_LOCAL_CONFIG)
+    connection = mysql.connector.connect(**DB_CONFIG)
     cursor = connection.cursor()
 
     if league_id == 'general':
