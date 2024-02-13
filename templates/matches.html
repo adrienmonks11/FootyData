@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+{% block content %}
+<style>
+    .container {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .matches-table {
+        flex: 1; 
+        margin-right: 10px;
+    }
+
+    .table {
+        font-size: 12px; 
+    }
+
+    .table th,
+    .table td {
+        padding: 8px; 
+    }
+
+    .title {
+        font-size: 28px; 
+        font-weight: bold;
+        margin-bottom: 10px;
+        margin-left: 20px; 
+    }
+
+    .match-time {
+        display: inline-block; 
+    }
+
+    .team-crest {
+        display: inline-block;
+        width: 25px; 
+        height: 25px; 
+        margin-left: 8px; 
+    }
+</style>
+
+<div class="title">
+    Upcoming {{ leagueName }} Fixtures
+</div>
+
+<a href="/stats/{{ leagueCode }}" style="margin-left: 10px;">Statistics</a>
+
+
+<div class="container">
+    <div class="matches-table">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% set prev_date = None %}
+                {% for date, matches in matches_data|groupby('formattedDate') %}
+                    <tr>
+                        <td colspan="4" style="font-weight: bold;">{{ date }}</td>
+                    </tr>
+                    {% for match in matches %}
+                        <tr>
+                            <td></td>
+                            <td>
+                                {{ match['homeTeam'] }}
+                            </td>
+                            <td class="match-time"><img src="{{ match['homeCrest'] }}" class="team-crest"> {{ match['formattedTime'] }}<img src="{{ match['awayCrest'] }}" class="team-crest"></td>
+                            <td>
+                                {{ match['awayTeam'] }}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="table-container">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Position</th>
+                    <th scope="col">Team</th>
+                    <th scope="col">MP</th>
+                    <th scope="col">W</th>
+                    <th scope="col">D</th>
+                    <th scope="col">L</th>
+                    <th scope="col">GF</th>
+                    <th scope="col">GA</th>
+                    <th scope="col">GD</th>
+                    <th scope="col">Pts</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for team in table_data %}
+                    <tr>
+                        <th scope="row">
+                            <img src="{{ team['logo'] }}" style="width: 25px; height: 25px; margin-right: 8px;">
+                            {{ team['position'] }}
+                        </th>
+                        <td>{{ team['team'] }}</td>
+                        <td>{{ team['playedGames'] }}</td>
+                        <td>{{ team['won'] }}</td>
+                        <td>{{ team['draw'] }}</td>
+                        <td>{{ team['lost'] }}</td>
+                        <td>{{ team['goalsFor'] }}</td>
+                        <td>{{ team['goalsAgainst'] }}</td>
+                        <td>{{ team['goalDifference'] }}</td>
+                        <td><strong>{{ team['points'] }}</strong></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+{% endblock %}

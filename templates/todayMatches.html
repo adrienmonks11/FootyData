@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block content %}
+<style>
+    .container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+
+    .matches-container {
+        flex: 2; 
+        margin-right: 10px;
+    }
+
+    .table-container {
+        flex: 1; 
+    }
+    .table {
+        font-size: 12px; 
+    }
+
+    .table th, .table td {
+        padding: 8px; 
+    }
+    @media screen and (min-width: 768px) {
+        .matches-container {
+            flex: 2;
+        }
+
+        .table-container {
+            flex: 1;
+        }
+    }
+</style>
+<h2>Today's Matches</h2>
+<div class="container">
+    <div class="matches-container">
+        {% set matches_grouped = matches_data|groupby('formattedDate') %}
+        {% for date, matches in matches_grouped %}
+            <h2>{{ date }}</h2>
+            <div class="matches">
+                {% for match in matches %}
+                    <div class="match">
+                        <p>
+                            {{ match['homeTeam'] }}
+                            <img src="{{ match['homeCrest'] }}" alt="{{ match['homeTeam'] }} Crest" style="width: 40px; height: 40px;">
+                            <span class="match-time">{{ match['formattedTime'] }}</span>
+                            <img src="{{ match['awayCrest'] }}" alt="{{ match['awayTeam'] }} Crest" style="width: 40px; height: 40px;">
+                            {{ match['awayTeam'] }}          
+                        </p>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

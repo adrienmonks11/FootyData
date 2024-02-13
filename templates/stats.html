@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+{% block content %}
+<style>
+    .container {
+        display: flex;
+        flex-wrap: wrap; 
+        justify-content: space-between; 
+    }
+
+    .table-container {
+        width: 48%;
+        margin-bottom: 20px; 
+    }
+
+    .table {
+        font-size: 12px;
+        width: 100%;
+    }
+
+    .table th, .table td {
+        padding: 6px;
+    }
+
+    .title {
+        font-size: 28px;
+        font-weight: bold;
+        margin-bottom: 10px;
+        margin-left: 20px;
+    }
+</style>
+
+<div class="title">
+    {{ leagueName }} Statistics
+</div>
+
+<a href="/matches/{{ leagueCode }}" style="margin-left: 10px;">Matches</a>
+
+<div class="container">
+    <div class="table-container">
+        <h2>Top Scorers</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col"></th>
+                    <th scope="col">Player</th>
+                    <th scope="col">Club</th>
+                    <th scope="col">Goals</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for player in goals %}
+                    {% set index = loop.index %}
+                    <tr>
+                        <td>{{ index }}</td>
+                        <td>{{ player[-1] }}</td>
+                        <td><img src="{{ player[3] }}"style="width: 25px; height: 25px ;">&nbsp;{{ player[2] }}</td>
+                        <td><strong>{{ player[4] }}</strong></td>
+                    </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="table-container">
+        <h2>Top Assists</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col"></th>
+                    <th scope="col">Player</th>
+                    <th scope="col">Club</th>
+                    <th scope="col">Assists</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for player in assists %}
+                    {% set index = loop.index %}
+                    <tr>
+                        <td>{{ index }}</td>
+                        <td>{{ player[-1] }}</td>
+                        <td><img src="{{ player[3] }}"style="width: 25px; height: 25px ;">&nbsp;{{ player[2] }}</td>
+                        <td><strong>{{ player[4] }}</strong></td>
+                    </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="table-container">
+        <h2>Goal Contributions</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col"></th>
+                    <th scope="col">Player</th>
+                    <th scope="col">Club</th>
+                    <th scope="col">Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for player in contributions%}
+                    {% set index = loop.index %}
+                    <tr>
+                        <td>{{ index }}</td>
+                        <td>{{ player[0] }}</td>
+                        <td><img src="{{ player[2] }}"style="width: 25px; height: 25px ;">&nbsp;{{ player[1] }}</td>
+                        <td><strong>{{ player[3] }}</strong></td>
+                    </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

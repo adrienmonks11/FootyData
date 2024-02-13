@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 mx-auto text-center"> 
+            <h1 class="h3">Welcome to FootyData</h1>
+            <p class="lead">Explore the latest football statistics, matches, and league standings, updated daily.</p>
+            <p class="lead">Click on the links above to navigate through the site.</p>
+        </div>
+    </div>
+
+    <div class="row justify-content-center"> 
+        <div class="col-md-4 mx-auto text-center"> 
+            <table class="table table-sm">
+                <h2 class="h5">Most Goals</h2> 
+                <tbody>
+                    {% for player in goals[:5] %}
+                        {% set index = loop.index %}
+                        <tr>
+                            <td>{{ index }}</td>
+                            <td>{{ player[-1] }}</td>
+                            <td><img src="{{ player[3] }}" style="width: 20px; height: 20px;">&nbsp;</td>
+                            <td><strong>{{ player[4] }}</strong></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-4 mx-auto text-center"> 
+            <table class="table table-sm">
+                <h2 class="h5">Most Assists</h2> 
+                <tbody>
+                    {% for player in assists[:5] %}
+                        {% set index = loop.index %}
+                        <tr>
+                            <td>{{ index }}</td>
+                            <td>{{ player[-1] }}</td>
+                            <td><img src="{{ player[3] }}" style="width: 20px; height: 20px;">&nbsp;</td>
+                            <td><strong>{{ player[4] }}</strong></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-4 mx-auto text-center">
+            <table class="table table-sm">
+                <h2 class="h5">Most Goal Contributions</h2> 
+                <tbody>
+                    {% for player in conts[:5] %}
+                        {% set index = loop.index %}
+                        <tr>
+                            <td>{{ index }}</td>
+                            <td>{{ player[0] }}</td>
+                            <td><img src="{{ player[2] }}" style="width: 20px; height: 20px;">&nbsp;</td>
+                            <td><strong>{{ player[3] }}</strong></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
