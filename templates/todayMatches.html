@@ -3,55 +3,94 @@
 <style>
     .container {
         display: flex;
-        flex-wrap: wrap;
         justify-content: space-between;
     }
 
+    .left-half {
+        width: 80%;
+    }
+
     .matches-container {
-        flex: 2; 
         margin-right: 10px;
     }
 
     .table-container {
-        flex: 1; 
+        flex: 1;
     }
+
     .table {
-        font-size: 12px; 
+        font-size: 12px;
     }
 
-    .table th, .table td {
-        padding: 8px; 
+    .match-time {
+        display: inline-block;
     }
-    @media screen and (min-width: 768px) {
-        .matches-container {
-            flex: 2;
+
+    .team-crest {
+        display: inline-block;
+        width: 25px;
+        height: 25px;
+        margin-left: 8px;
+    }
+
+    .table th,
+    .table td {
+        padding: 8px;
+    }
+
+    @media screen and (max-width: 768px) {
+        .container {
+            flex-direction: column;
         }
-
-        .table-container {
-            flex: 1;
+        .left-half {
+            width: 100%;
         }
     }
 </style>
 <h2>Today's Matches</h2>
 <div class="container">
-    <div class="matches-container">
-        {% set matches_grouped = matches_data|groupby('formattedDate') %}
-        {% for date, matches in matches_grouped %}
-            <h2>{{ date }}</h2>
-            <div class="matches">
-                {% for match in matches %}
-                    <div class="match">
-                        <p>
-                            {{ match['homeTeam'] }}
-                            <img src="{{ match['homeCrest'] }}" alt="{{ match['homeTeam'] }} Crest" style="width: 40px; height: 40px;">
-                            <span class="match-time">{{ match['formattedTime'] }}</span>
-                            <img src="{{ match['awayCrest'] }}" alt="{{ match['awayTeam'] }} Crest" style="width: 40px; height: 40px;">
-                            {{ match['awayTeam'] }}          
-                        </p>
-                    </div>
-                {% endfor %}
-            </div>
-        {% endfor %}
+    <div class="left-half">
+        <div class="matches-container">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% set matches_grouped = matches_data|groupby('formattedDate') %}
+                    {% for date, matches in matches_grouped %}
+                        <tr>
+                            <td colspan="4" style="font-weight: bold;">{{ date }}</td>
+                        </tr>
+                        {% for match in matches %}
+                            <tr>
+                                <td></td>
+                                <td>
+                                    {{ match['homeTeam'] }}
+                                </td>
+                                <td class="match-time"><img src="{{ match['homeCrest'] }}" class="team-crest"> {{ match['formattedTime'] }}<img src="{{ match['awayCrest'] }}" class="team-crest"></td>
+                                <td>
+                                    {{ match['awayTeam'] }}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="table-container">
+        <table>
+            <tr><td><a href="/matches/SA" style="margin-left: 10px;">Serie A Matches</a></td></tr>
+            <tr><td><a href="/matches/BL1" style="margin-left: 10px;">Bundesliga Matches</a></td></tr>
+            <tr><td><a href="/matches/PD" style="margin-left: 10px;">La Liga Matches</a></td></tr>
+            <tr><td><a href="/matches/PL" style="margin-left: 10px;">Premier League Matches</a></td></tr>
+            <tr><td><a href="/matches/FL1" style="margin-left: 10px;">Ligue 1 Matches</a></td></tr>     
+        </table>     
     </div>
 </div>
 {% endblock %}
